@@ -36,7 +36,7 @@ mod tests_vec2 {
     fn add_assign() {
         let mut vec = Vec2::default();
         vec += Vec2::new(1., 2.);
-        assert_eq!(vec, Vec2::new(1., 2.));    
+        assert_eq!(vec, Vec2::new(1., 2.));
 
         let mut vec = Vec2::new(2., 1.);
         vec += Vec2::new(1., 2.);
@@ -105,7 +105,7 @@ mod tests_vec3 {
     fn add_assign() {
         let mut vec = Vec3::default();
         vec += Vec3::new(1., 2., 3.);
-        assert_eq!(vec, Vec3::new(1., 2., 3.));    
+        assert_eq!(vec, Vec3::new(1., 2., 3.));
 
         let mut vec = Vec3::new(3., 2., 1.);
         vec += Vec3::new(1., 2., 3.);
@@ -127,11 +127,22 @@ mod tests_vec3 {
     fn sub_assign() {
         let mut vec = Vec3::default();
         vec -= Vec3::new(1., 2., 3.);
-        assert_eq!(vec, Vec3::new(-1., -2., -3.));    
+        assert_eq!(vec, Vec3::new(-1., -2., -3.));
 
         let mut vec = Vec3::new(3., 2., 1.);
         vec -= Vec3::new(1., 2., 3.);
         assert_eq!(vec, Vec3::new(2., 0., -2.));
+    }
+
+    #[test]
+    fn cross_product() {
+        let a = Vec3::new(1., 2., 3.);
+        let b = Vec3::new(2., 1., -2.);
+        assert_eq!(a.cross_product(b), Vec3::new(-7., 8., -3.));
+
+        let a = Vec3::new(-1., 2., -2.);
+        let b = Vec3::new(2., 1., -1.);
+        assert_eq!(a.cross_product(b), Vec3::new(0., -5., -5.));
     }
 }
 
@@ -175,7 +186,7 @@ mod tests_vec4 {
     fn add_assign() {
         let mut vec = Vec4::default();
         vec += Vec4::new(1., 2., 3., 4.);
-        assert_eq!(vec, Vec4::new(1., 2., 3., 4.));    
+        assert_eq!(vec, Vec4::new(1., 2., 3., 4.));
 
         let mut vec = Vec4::new(4., 3., 2., 1.);
         vec += Vec4::new(1., 2., 3., 4.);
@@ -197,7 +208,7 @@ mod tests_vec4 {
     fn sub_assign() {
         let mut vec = Vec4::default();
         vec -= Vec4::new(1., 2., 3., 4.);
-        assert_eq!(vec, Vec4::new(-1., -2., -3., -4.));    
+        assert_eq!(vec, Vec4::new(-1., -2., -3., -4.));
 
         let mut vec = Vec4::new(4., 3., 2., 1.);
         vec -= Vec4::new(1., 2., 3., 4.);

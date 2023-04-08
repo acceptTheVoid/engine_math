@@ -3,8 +3,8 @@ name = "engine_math"
 version = "0.1.0"
 edition = "2021"
 
-[lib]
-path = "math"
+[dependencies]
+math = { path = "math" }
 
 [workspace]
 members = [

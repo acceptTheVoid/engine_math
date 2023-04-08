@@ -33,6 +33,12 @@ pub fn vec_derive(input: TokenStream) -> TokenStream {
                 let len = self.length();
                 *self / len
             }
+
+            pub fn get_angle_between(self, rhs: Self) -> f32 {
+                let lhs_length = self.length();
+                let rhs_length = rhs.length();
+                (dbg!(self * rhs) / dbg!(lhs_length * rhs_length)).acos()
+            }
         }
 
         impl std::ops::Add for #ident {
@@ -71,7 +77,7 @@ pub fn vec_derive(input: TokenStream) -> TokenStream {
             type Output = f32;
 
             fn mul(self, rhs: Self) -> Self::Output {
-                #(self.#field_names * self.#field_names) + *
+                dbg!(#(self.#field_names * rhs.#field_names) + *)
             }
         }
 
