@@ -3,42 +3,45 @@ use std::{
     ops::{Add, AddAssign, Div, DivAssign, Index, IndexMut, Mul, MulAssign, Neg, Sub, SubAssign},
 };
 
+use generic_array::{GenericArray, ArrayLength};
+
 #[derive(Debug, Clone, PartialEq)]
-pub struct Mat<const ROWS: usize, const COLUMNS: usize> {
-    data: [[f32; COLUMNS]; ROWS],
+pub struct Mat<Rows: ArrayLength, Columns: ArrayLength> {
+    data: GenericArray<GenericArray<f32, Columns>, Rows>,
 }
 
-impl<const ROWS: usize, const COLUMNS: usize> Mat<ROWS, COLUMNS> {
+impl<Rows: ArrayLength, Columns: ArrayLength> Mat<Rows, Columns> {
     pub fn zero() -> Self {
         Self {
-            data: [[0.; COLUMNS]; ROWS],
+            data: GenericArray::default(),
         }
     }
 }
 
-impl<const DIM: usize> Mat<DIM, DIM> {
+impl<Dim: ArrayLength> Mat<Dim, Dim> {
     pub fn identity() -> Self {
         Self::scalar(1.)
     }
 
     pub fn scalar(value: f32) -> Self {
-        let mut data = [[0.; DIM]; DIM];
-        for i in 0..DIM {
+        let mut data = GenericArray::default();
+        for i in 0..data.len() {
             data[i][i] = value;
         }
+
         Self { data }
     }
 }
 
-impl<const ROWS: usize, const COLUMNS: usize> From<[[f32; COLUMNS]; ROWS]> for Mat<ROWS, COLUMNS> {
+impl<Rows: ArrayLength, Columns: ArrayLength, const COLUMNS: usize, const ROWS: usize> From<[[f32; COLUMNS]; ROWS]> for Mat<Rows, Columns> {
     fn from(data: [[f32; COLUMNS]; ROWS]) -> Self {
         Self { data }
     }
 }
 
-impl<const ROWS: usize, const COLUMNS: usize> Mat<ROWS, COLUMNS> {
+impl<Rows: ArrayLength, Columns: ArrayLength> Mat<Rows, Columns> {
     pub const fn dim(&self) -> (usize, usize) {
-        (ROWS, COLUMNS)
+        (Rows, Columns)
     }
 
     pub fn row(&self, idx: usize) -> [f32; COLUMNS] {
